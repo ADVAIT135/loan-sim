@@ -45,6 +45,23 @@ export default function DecisionCard({ result }) {
           <div key={r.id} className="text-sm">{r.name} — <span className="text-xs text-gray-500">{r.severity}</span></div>
         ))}
       </div>
+      <div className="flex justify-between items-center">
+        <div>
+          <div className="text-lg font-semibold">
+            Decision:
+            <span className={`ml-2 badge ${decision === 'approve' ? 'bg-green-50 text-green-700' : decision === 'manual_review' ? 'bg-yellow-50 text-yellow-700' : 'bg-red-50 text-red-700'}`}>
+              {decision.toUpperCase()}
+            </span>
+          </div>
+          <div className="text-sm text-gray-500 mt-1">{reason}</div>
+        </div>
+      
+        <div className="text-right">
+          <div className="text-sm text-gray-400">Model score</div>
+          <div className="text-2xl font-mono">{(prob * 100).toFixed(1)}%</div>
+        </div>
+      </div>
+
 
       <div className="mt-3">
         <div className="font-medium">Model contributions</div>
