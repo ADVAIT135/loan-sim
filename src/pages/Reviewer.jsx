@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+import { supabase } from '../lib/supabase';
 
 function JsonModal({ payload, onClose }) {
   if (!payload) return null;
@@ -26,15 +22,28 @@ export default function Reviewer() {
   const [decisionFilter, setDecisionFilter] = useState('');
   const [page, setPage] = useState(0);
   const [selected, setSelected] = useState(null);
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => { fetchLogs(); }, [page]);
 
   async function fetchLogs() {
     const limit = 20;
     const offset = page * limit;
-    let query = supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).range(offset, offset + limit - 1);
-    const { data, error } = await query;
-    if (!error) setLogs(data || []);
+    setFetchError(null);
+
+    const { data, error } = await supabase
+      .from('audit_logs')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (error) {
+      setLogs([]);
+      setFetchError(error.message || 'Failed to load audit logs');
+      return;
+    }
+
+    setLogs(data || []);
   }
 
   function filteredLogs() {
@@ -61,7 +70,8 @@ export default function Reviewer() {
       </div>
 
       <div className="space-y-3">
-        {filteredLogs().length === 0 && <div className="text-sm text-gray-600">No audit logs yet</div>}
+        {fetchError && <div className="text-sm text-red-600">{fetchError}</div>}
+        {!fetchError && filteredLogs().length === 0 && <div className="text-sm text-gray-600">No audit logs yet</div>}
         {filteredLogs().map(log => (
           <div key={log.id} className="border p-4 rounded-lg flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
             <div className="flex-1">
