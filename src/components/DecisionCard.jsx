@@ -1,7 +1,23 @@
 import React from 'react';
 
+function ContributionBar({ name, contrib, maxAbs }) {
+  const width = Math.min(100, Math.abs(contrib) / maxAbs * 100 || 0);
+  const positive = contrib >= 0;
+  return (
+    <div className="flex items-center gap-3">
+      <div className="w-24 text-xs text-gray-600">{name}</div>
+      <div className="flex-1 bg-gray-200 h-3 rounded overflow-hidden">
+        <div style={{ width: `${width}%` }} className={`h-3 ${positive ? 'bg-green-500' : 'bg-red-500'}`} />
+      </div>
+      <div className="w-20 text-xs text-right">{contrib.toFixed(3)}</div>
+    </div>
+  );
+}
+
 export default function DecisionCard({ result }) {
-  const { decision, reason, prob, contributions, rulesTriggered } = result;
+  if (!result) return null;
+  const { decision, reason, prob = 0, contributions = [], rulesTriggered = [] } = result;
+  const maxAbs = Math.max(...contributions.map(c => Math.abs(c.contrib)), 0.0001);
 
   return (
     <div className="mt-4 border p-4 rounded bg-gray-50">
@@ -17,6 +33,12 @@ export default function DecisionCard({ result }) {
       </div>
 
       <div className="mt-3">
+        <div className="h-3 bg-gray-200 rounded overflow-hidden">
+          <div style={{ width: `${Math.min(100, prob * 100)}%` }} className={`h-3 ${prob > 0.6 ? 'bg-green-500' : (prob > 0.4 ? 'bg-yellow-500' : 'bg-red-500')}`} />
+        </div>
+      </div>
+
+      <div className="mt-3">
         <div className="font-medium">Rules triggered</div>
         {rulesTriggered.length === 0 && <div className="text-sm text-gray-600">None</div>}
         {rulesTriggered.map(r => (
@@ -26,11 +48,11 @@ export default function DecisionCard({ result }) {
 
       <div className="mt-3">
         <div className="font-medium">Model contributions</div>
-        <ul className="text-sm">
+        <div className="space-y-2 mt-2">
           {contributions.map(c => (
-            <li key={c.name}>{c.name}: value {c.value} → contribution {c.contrib.toFixed(3)}</li>
+            <ContributionBar key={c.name} name={c.name} contrib={c.contrib} maxAbs={maxAbs} />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
