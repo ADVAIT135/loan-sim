@@ -28,8 +28,20 @@ export default function Submit() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ applicant, applicantId: applicant.id })
       });
-      const json = await res.json();
-      setResult(json);
+      const payloadText = await res.text();
+      let json;
+      try {
+        json = JSON.parse(payloadText);
+      } catch {
+        json = null;
+      }
+
+      if (!res.ok) {
+        const reason = json?.error || json?.message || payloadText || 'Server error';
+        setResult({ decision: 'error', reason, prob: 0, contributions: [], rulesTriggered: [] });
+      } else {
+        setResult(json);
+      }
     } catch (err) {
       setResult({ decision: 'error', reason: err.message, prob: 0, contributions: [], rulesTriggered: [] });
     } finally {

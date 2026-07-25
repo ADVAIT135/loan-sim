@@ -81,18 +81,36 @@ exports.handler = async function(event) {
       timestamp: new Date().toISOString()
     };
 
-    const auditProxyUrl = process.env.AUDIT_PROXY_URL || `/.netlify/functions/auditProxy`;
-    await fetch(auditProxyUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(auditRecord)
-    });
+    const auditProxyUrl = process.env.AUDIT_PROXY_URL;
+    if (auditProxyUrl) {
+      await fetch(auditProxyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(auditRecord)
+      });
+    } else {
+      const SUPABASE_URL = process.env.SUPABASE_URL;
+      const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/audit_logs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_SERVICE_ROLE,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE}`
+        },
+        body: JSON.stringify({ payload: auditRecord, created_at: new Date().toISOString() })
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Supabase insert failed: ${text}`);
+      }
+    }
 
     return {
       statusCode: 200,
       body: JSON.stringify({ decision, reason, prob, contributions, rulesTriggered })
     };
   } catch (err) {
-    return { statusCode: 500, body: `Error: ${err.message}` };
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 };
