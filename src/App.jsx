@@ -36,6 +36,17 @@ export default function App() {
           <Reviewer />
         </section>
       </main>
+      
+      <footer className="bg-white border-t mt-12">
+        <div className="max-w-4xl mx-auto p-4 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-600">
+          <div>
+            Built by <a href="https://github.com/ADVAIT135" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline">ADVAIT135 (ADVAIT GURUNATH CHAVAN)</a>
+          </div>
+          <div className="mt-2 sm:mt-0">
+            Connect: <a href="https://www.linkedin.com/in/advait-chavan-69928b129/" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline">LinkedIn</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
