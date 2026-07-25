@@ -83,6 +83,11 @@ exports.handler = async function(event) {
 
     const auditProxyUrl = process.env.AUDIT_PROXY_URL;
     if (auditProxyUrl) {
+      try {
+        new URL(auditProxyUrl);
+      } catch {
+        throw new Error('AUDIT_PROXY_URL must be an absolute URL');
+      }
       await fetch(auditProxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -91,7 +96,12 @@ exports.handler = async function(event) {
     } else {
       const SUPABASE_URL = process.env.SUPABASE_URL;
       const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/audit_logs`, {
+      if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE) {
+        throw new Error('Missing AUDIT_PROXY_URL or Supabase configuration in server environment');
+      }
+
+      const auditUrl = `${SUPABASE_URL.replace(/\/$/, '')}/rest/v1/audit_logs`;
+      const res = await fetch(auditUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,6 +121,7 @@ exports.handler = async function(event) {
       body: JSON.stringify({ decision, reason, prob, contributions, rulesTriggered })
     };
   } catch (err) {
+    console.error('Decision function error:', err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 };
