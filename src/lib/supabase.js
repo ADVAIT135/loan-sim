@@ -12,12 +12,14 @@ function isValidUrl(u) {
   }
 }
 
+let supabase = null;
+
 if (!isValidUrl(SUPABASE_URL)) {
   console.error('Invalid VITE_SUPABASE_URL:', SUPABASE_URL);
-  export const supabase = null;
 } else if (!SUPABASE_ANON_KEY) {
   console.error('Missing VITE_SUPABASE_ANON_KEY');
-  export const supabase = null;
 } else {
-  export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 }
+
+export { supabase };
