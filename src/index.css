@@ -2,4 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+/* Design tokens */
+:root{
+  --bg: #0f172a; /* deep navy background for header area if needed */
+  --muted: #6b7280;
+  --accent: #0ea5a4; /* teal */
+  --accent-2: #7c3aed; /* purple */
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --card: #ffffff;
+  --glass: rgba(255,255,255,0.04);
+  --soft-shadow: 0 6px 18px rgba(2,6,23,0.08);
+}
+
+/* Body */
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  color: #0f172a;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: var(--soft-shadow);
+  padding: 1rem;
+}
+
+/* Small helpers */
+.kicker { color: var(--muted); font-size: 0.85rem; }
+.badge { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 999px; }
+
+/* Decision colors */
+.decision-approve { color: var(--success); }
+.decision-review { color: var(--warning); }
+.decision-decline { color: var(--danger); }
+
+/* Contribution bar tweaks */
+.contribution-track { background: #f1f5f9; border-radius: 6px; height: 10px; overflow: hidden; }
+.contribution-pos { background: linear-gradient(90deg, rgba(16,185,129,0.95), rgba(14,165,164,0.95)); height: 100%; }
+.contribution-neg { background: linear-gradient(90deg, rgba(239,68,68,0.95), rgba(244,63,94,0.95)); height: 100%; }
+
+/* Tiny responsive tweaks */
+@media (min-width: 768px) {
+  .container-md { max-width: 900px; margin: 0 auto; }
+}
