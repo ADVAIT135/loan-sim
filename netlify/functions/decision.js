@@ -82,13 +82,22 @@ exports.handler = async function(event) {
     };
 
     const auditProxyUrl = process.env.AUDIT_PROXY_URL;
+    let resolvedAuditProxyUrl = null;
+
     if (auditProxyUrl) {
       try {
-        new URL(auditProxyUrl);
+        resolvedAuditProxyUrl = new URL(auditProxyUrl).href;
       } catch {
-        throw new Error('AUDIT_PROXY_URL must be an absolute URL');
+        if (process.env.URL && auditProxyUrl.startsWith('/')) {
+          resolvedAuditProxyUrl = new URL(auditProxyUrl, process.env.URL).href;
+        } else {
+          throw new Error('AUDIT_PROXY_URL must be an absolute URL or a root-relative path when deployed on Netlify');
+        }
       }
-      await fetch(auditProxyUrl, {
+    }
+
+    if (resolvedAuditProxyUrl) {
+      await fetch(resolvedAuditProxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(auditRecord)
