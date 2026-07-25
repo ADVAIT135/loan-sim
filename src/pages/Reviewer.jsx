@@ -48,38 +48,36 @@ export default function Reviewer() {
   }
 
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <div className="flex gap-3 mb-3">
-        <input placeholder="Search logs" value={filter} onChange={e => setFilter(e.target.value)} className="p-2 border rounded flex-1" />
-        <select value={decisionFilter} onChange={e => setDecisionFilter(e.target.value)} className="p-2 border rounded">
+    <div className="bg-white p-5 rounded-3xl shadow-sm border border-gray-200 space-y-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <input placeholder="Search logs" value={filter} onChange={e => setFilter(e.target.value)} className="p-3 border rounded flex-1" />
+        <select value={decisionFilter} onChange={e => setDecisionFilter(e.target.value)} className="p-3 border rounded w-full sm:w-auto">
           <option value="">All</option>
           <option value="approve">Approve</option>
           <option value="manual_review">Manual Review</option>
           <option value="decline">Decline</option>
         </select>
-        <button onClick={() => { setPage(0); fetchLogs(); }} className="px-3 py-1 bg-blue-600 text-white rounded">Refresh</button>
+        <button onClick={() => { setPage(0); fetchLogs(); }} className="px-4 py-3 bg-blue-600 text-white rounded-lg">Refresh</button>
       </div>
 
       <div className="space-y-3">
-        {filteredLogs().length === 0 && <div>No audit logs yet</div>}
+        {filteredLogs().length === 0 && <div className="text-sm text-gray-600">No audit logs yet</div>}
         {filteredLogs().map(log => (
-          <div key={log.id} className="border p-3 rounded flex justify-between items-start">
+          <div key={log.id} className="border p-4 rounded-lg flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
             <div className="flex-1">
               <div className="text-sm text-gray-600">{new Date(log.created_at).toLocaleString()}</div>
               <div className="text-sm mt-1">{(log.payload?.decision || '—').toUpperCase()} — {log.payload?.reason || ''}</div>
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => setSelected(log.payload)} className="px-2 py-1 bg-gray-200 rounded text-sm">View JSON</button>
-            </div>
+            <button onClick={() => setSelected(log.payload)} className="px-3 py-2 bg-gray-200 rounded text-sm">View JSON</button>
           </div>
         ))}
       </div>
 
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center mt-4">
         <div className="text-sm text-gray-600">Page {page + 1}</div>
         <div className="flex gap-2">
-          <button onClick={() => { if (page > 0) setPage(p => p - 1); }} className="px-2 py-1 bg-gray-200 rounded">Prev</button>
-          <button onClick={() => { setPage(p => p + 1); }} className="px-2 py-1 bg-gray-200 rounded">Next</button>
+          <button disabled={page === 0} onClick={() => { if (page > 0) setPage(p => p - 1); }} className="px-3 py-2 bg-gray-200 rounded disabled:opacity-40">Prev</button>
+          <button onClick={() => { setPage(p => p + 1); }} className="px-3 py-2 bg-gray-200 rounded">Next</button>
         </div>
       </div>
 
