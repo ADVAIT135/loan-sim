@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
 
 function JsonModal({ payload, onClose }) {
   if (!payload) return null;
@@ -31,19 +30,29 @@ export default function Reviewer() {
     const offset = page * limit;
     setFetchError(null);
 
-    const { data, error } = await supabase
-      .from('audit_logs')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1);
+    try {
+      const params = new URLSearchParams({ limit: String(limit), offset: String(offset) });
+      const res = await fetch(`/.netlify/functions/auditProxy?${params.toString()}`);
+      const text = await res.text();
+      let payload;
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        payload = null;
+      }
 
-    if (error) {
+      if (!res.ok) {
+        const message = payload?.error || text || 'Failed to load audit logs';
+        setLogs([]);
+        setFetchError(message);
+        return;
+      }
+
+      setLogs(payload?.data || []);
+    } catch (err) {
       setLogs([]);
-      setFetchError(error.message || 'Failed to load audit logs');
-      return;
+      setFetchError(err.message || 'Failed to load audit logs');
     }
-
-    setLogs(data || []);
   }
 
   function filteredLogs() {

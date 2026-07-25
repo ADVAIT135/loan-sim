@@ -97,11 +97,15 @@ exports.handler = async function(event) {
     }
 
     if (resolvedAuditProxyUrl) {
-      await fetch(resolvedAuditProxyUrl, {
+      const proxyRes = await fetch(resolvedAuditProxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(auditRecord)
       });
+      if (!proxyRes.ok) {
+        const text = await proxyRes.text();
+        throw new Error(`Audit proxy failed: ${proxyRes.status} ${text}`);
+      }
     } else {
       const SUPABASE_URL = process.env.SUPABASE_URL;
       const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
