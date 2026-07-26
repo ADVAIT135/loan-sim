@@ -25,24 +25,24 @@ export default function ApplicationForm({ onSubmit, onLiveChange }) {
     <form onSubmit={submit} className="grid grid-cols-1 gap-3">
       <div className="grid grid-cols-2 gap-3">
         <label className="flex flex-col">
-          <span className="text-xs text-gray-600">Income</span>
+          <span className="text-xs text-gray-600 dark:text-gray-300">Income</span>
           <input type="number" value={income} onChange={e => setIncome(e.target.value)} className="w-full p-2 border rounded" />
         </label>
         <label className="flex flex-col">
-          <span className="text-xs text-gray-600">Age</span>
+          <span className="text-xs text-gray-600 dark:text-gray-300">Age</span>
           <input type="number" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border rounded" />
         </label>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <label className="flex flex-col">
-          <span className="text-xs text-gray-600">Loan Amount</span>
+          <span className="text-xs text-gray-600 dark:text-gray-300">Loan Amount</span>
           <input type="number" value={loanAmount} onChange={e => setLoanAmount(e.target.value)} className="w-full p-2 border rounded" />
         </label>
         <label className="flex flex-col">
-          <span className="text-xs text-gray-600">Debt Ratio</span>
+          <span className="text-xs text-gray-600 dark:text-gray-300">Debt Ratio</span>
           <input type="range" min="0" max="1" step="0.01" value={debtRatio} onChange={e => setDebtRatio(e.target.value)} className="w-full" />
-          <div className="text-xs text-gray-500">{Number(debtRatio).toFixed(2)}</div>
+          <div className="text-xs text-gray-500 dark:text-gray-300">{Number(debtRatio).toFixed(2)}</div>
         </label>
       </div>
 
@@ -63,10 +63,10 @@ export default function ApplicationForm({ onSubmit, onLiveChange }) {
       </div>
 
       <div className="flex gap-3">
-        <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded">Submit Application</button>
+        <button type="submit" className="px-4 py-2 bg-green-600 text-white dark:bg-green-500 rounded">Submit Application</button>
         <button type="button" onClick={() => {
           setIncome(50000); setAge(30); setLoanAmount(10000); setDebtRatio(0.2); setBlacklisted(false); setRegion('RegionA');
-        }} className="px-3 py-2 bg-gray-200 rounded">Reset</button>
+        }} className="px-3 py-2 bg-gray-200 dark:bg-gray-700 dark:text-gray-100 rounded">Reset</button>
       </div>
     </form>
   );

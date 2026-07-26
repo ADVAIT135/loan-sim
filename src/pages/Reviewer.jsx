@@ -4,10 +4,10 @@ function JsonModal({ payload, onClose }) {
   if (!payload) return null;
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-4 rounded w-11/12 max-w-3xl">
+      <div className="bg-white dark:bg-gray-900 p-4 rounded w-11/12 max-w-3xl">
         <div className="flex justify-between items-center mb-2">
           <div className="font-medium">Audit JSON</div>
-          <button onClick={onClose} className="px-2 py-1 bg-gray-200 rounded">Close</button>
+          <button onClick={onClose} className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-100 rounded">Close</button>
         </div>
         <pre className="text-xs max-h-96 overflow-auto">{JSON.stringify(payload, null, 2)}</pre>
       </div>
@@ -66,7 +66,7 @@ export default function Reviewer() {
   }
 
   return (
-    <div className="bg-white p-5 rounded-3xl shadow-sm border border-gray-200 space-y-5">
+    <div className="bg-white dark:bg-gray-900 p-5 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <input placeholder="Search logs" value={filter} onChange={e => setFilter(e.target.value)} className="p-3 border rounded flex-1" />
         <select value={decisionFilter} onChange={e => setDecisionFilter(e.target.value)} className="p-3 border rounded w-full sm:w-auto">
@@ -75,28 +75,28 @@ export default function Reviewer() {
           <option value="manual_review">Manual Review</option>
           <option value="decline">Decline</option>
         </select>
-        <button onClick={() => { setPage(0); fetchLogs(); }} className="px-4 py-3 bg-blue-600 text-white rounded-lg">Refresh</button>
+        <button onClick={() => { setPage(0); fetchLogs(); }} className="px-4 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg">Refresh</button>
       </div>
 
       <div className="space-y-3">
-        {fetchError && <div className="text-sm text-red-600">{fetchError}</div>}
-        {!fetchError && filteredLogs().length === 0 && <div className="text-sm text-gray-600">No audit logs yet</div>}
+        {fetchError && <div className="text-sm text-red-600 dark:text-red-400">{fetchError}</div>}
+        {!fetchError && filteredLogs().length === 0 && <div className="text-sm text-gray-600 dark:text-gray-300">No audit logs yet</div>}
         {filteredLogs().map(log => (
           <div key={log.id} className="border p-4 rounded-lg flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
             <div className="flex-1">
-              <div className="text-sm text-gray-600">{new Date(log.created_at).toLocaleString()}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">{new Date(log.created_at).toLocaleString()}</div>
               <div className="text-sm mt-1">{(log.payload?.decision || '—').toUpperCase()} — {log.payload?.reason || ''}</div>
             </div>
-            <button onClick={() => setSelected(log.payload)} className="px-3 py-2 bg-gray-200 rounded text-sm">View JSON</button>
+            <button onClick={() => setSelected(log.payload)} className="px-3 py-2 bg-gray-200 dark:bg-gray-700 dark:text-gray-100 rounded text-sm">View JSON</button>
           </div>
         ))}
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center mt-4">
-        <div className="text-sm text-gray-600">Page {page + 1}</div>
+        <div className="text-sm text-gray-600 dark:text-gray-300">Page {page + 1}</div>
         <div className="flex gap-2">
-          <button disabled={page === 0} onClick={() => { if (page > 0) setPage(p => p - 1); }} className="px-3 py-2 bg-gray-200 rounded disabled:opacity-40">Prev</button>
-          <button onClick={() => { setPage(p => p + 1); }} className="px-3 py-2 bg-gray-200 rounded">Next</button>
+          <button disabled={page === 0} onClick={() => { if (page > 0) setPage(p => p - 1); }} className="px-3 py-2 bg-gray-200 dark:bg-gray-700 dark:text-gray-100 rounded disabled:opacity-40">Prev</button>
+          <button onClick={() => { setPage(p => p + 1); }} className="px-3 py-2 bg-gray-200 dark:bg-gray-700 dark:text-gray-100 rounded">Next</button>
         </div>
       </div>
 

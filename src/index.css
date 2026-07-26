@@ -58,6 +58,11 @@ html.dark {
 .contribution-pos { background: linear-gradient(90deg, rgba(16,185,129,0.95), rgba(14,165,164,0.95)); height: 100%; }
 .contribution-neg { background: linear-gradient(90deg, rgba(239,68,68,0.95), rgba(244,63,94,0.95)); height: 100%; }
 
+/* Dark-mode overrides for contribution visuals */
+html.dark .contribution-track { background: #0b1220; }
+html.dark .contribution-pos { background: linear-gradient(90deg, rgba(34,197,94,0.9), rgba(20,184,166,0.9)); }
+html.dark .contribution-neg { background: linear-gradient(90deg, rgba(239,68,68,0.9), rgba(220,38,38,0.9)); }
+
 /* Tiny responsive tweaks */
 @media (min-width: 768px) {
   .container-md { max-width: 900px; margin: 0 auto; }

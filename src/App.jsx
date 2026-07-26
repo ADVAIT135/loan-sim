@@ -22,12 +22,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-gradient-to-r from-sky-600 to-indigo-600 text-white py-4 shadow-md">
+      <header className="bg-gradient-to-r from-sky-600 to-indigo-600 dark:from-sky-700 dark:to-indigo-900 text-white dark:text-gray-100 py-4 shadow-md">
   <div className="container-md mx-auto px-4 flex justify-between items-center">
     <div className="flex items-center gap-3">
       <div>
         <div className="text-lg font-semibold">Loan Decision Simulator</div>
-        <div className="text-xs text-white/80">Hybrid rules + explainable ML</div>
+          <div className="text-xs text-white/80 dark:text-white/70">Hybrid rules + explainable ML</div>
       </div>
     </div>
 
@@ -37,7 +37,7 @@ export default function App() {
       <button
         onClick={toggleTheme}
         aria-label="Toggle theme"
-        className="ml-2 p-2 rounded-md bg-white/20 hover:bg-white/30 text-white flex items-center"
+        className="ml-2 p-2 rounded-md bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 text-white flex items-center"
       >
         {theme === 'dark' ? (
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
