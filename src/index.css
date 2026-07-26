@@ -4,7 +4,7 @@
 
 /* Design tokens */
 :root{
-  --bg: #0f172a; /* deep navy background for header area if needed */
+  --bg: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
   --muted: #6b7280;
   --accent: #0ea5a4; /* teal */
   --accent-2: #7c3aed; /* purple */
@@ -12,7 +12,7 @@
   --warning: #f59e0b;
   --danger: #ef4444;
   --card: #ffffff;
-  --glass: rgba(255,255,255,0.04);
+  --glass: rgba(2,6,23,0.04);
   --soft-shadow: 0 6px 18px rgba(2,6,23,0.08);
   --text-color: #0f172a;
 }
