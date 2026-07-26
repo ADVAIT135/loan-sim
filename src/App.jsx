@@ -21,7 +21,7 @@ export default function App() {
   const toggleTheme = () => setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
+    <div className="min-h-screen">
       <header className="bg-gradient-to-r from-sky-600 to-indigo-600 text-white py-4 shadow-md">
   <div className="container-md mx-auto px-4 flex justify-between items-center">
     <div className="flex items-center gap-3">
