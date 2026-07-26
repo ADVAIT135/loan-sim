@@ -72,7 +72,7 @@ export default function Submit() {
           <div className="flex items-center gap-2">
             <input type="range" min="0" max="0.5" step="0.01" value={thresholds.decline}
               onChange={e => setThresholds(t => ({ ...t, decline: Number(e.target.value) }))}
-              className="w-full" />
+              className="w-full accent-sky-600 dark:accent-sky-400" />
             <div className="text-sm w-12 text-right">{thresholds.decline.toFixed(2)}</div>
           </div>
 
@@ -80,7 +80,7 @@ export default function Submit() {
           <div className="flex items-center gap-2">
             <input type="range" min="0.5" max="1" step="0.01" value={thresholds.review}
               onChange={e => setThresholds(t => ({ ...t, review: Number(e.target.value) }))}
-              className="w-full" />
+              className="w-full accent-sky-600 dark:accent-sky-400" />
             <div className="text-sm w-12 text-right">{thresholds.review.toFixed(2)}</div>
           </div>
         </div>

@@ -26,35 +26,35 @@ export default function ApplicationForm({ onSubmit, onLiveChange }) {
       <div className="grid grid-cols-2 gap-3">
         <label className="flex flex-col">
           <span className="text-xs text-gray-600 dark:text-gray-300">Income</span>
-          <input type="number" value={income} onChange={e => setIncome(e.target.value)} className="w-full p-2 border rounded" />
+          <input type="number" value={income} onChange={e => setIncome(e.target.value)} className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:border-gray-600" />
         </label>
         <label className="flex flex-col">
           <span className="text-xs text-gray-600 dark:text-gray-300">Age</span>
-          <input type="number" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border rounded" />
+          <input type="number" value={age} onChange={e => setAge(e.target.value)} className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:border-gray-600" />
         </label>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <label className="flex flex-col">
           <span className="text-xs text-gray-600 dark:text-gray-300">Loan Amount</span>
-          <input type="number" value={loanAmount} onChange={e => setLoanAmount(e.target.value)} className="w-full p-2 border rounded" />
+          <input type="number" value={loanAmount} onChange={e => setLoanAmount(e.target.value)} className="w-full p-2 border border-gray-300 rounded bg-white text-gray-900 placeholder-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:border-gray-600" />
         </label>
         <label className="flex flex-col">
           <span className="text-xs text-gray-600 dark:text-gray-300">Debt Ratio</span>
-          <input type="range" min="0" max="1" step="0.01" value={debtRatio} onChange={e => setDebtRatio(e.target.value)} className="w-full" />
+          <input type="range" min="0" max="1" step="0.01" value={debtRatio} onChange={e => setDebtRatio(e.target.value)} className="w-full accent-sky-600 dark:accent-sky-400" />
           <div className="text-xs text-gray-500 dark:text-gray-300">{Number(debtRatio).toFixed(2)}</div>
         </label>
       </div>
 
       <div className="flex items-center gap-4">
         <label className="flex items-center gap-2">
-          <input type="checkbox" checked={blacklisted} onChange={e => setBlacklisted(e.target.checked)} />
-          <span className="text-sm">Blacklisted</span>
+          <input type="checkbox" checked={blacklisted} onChange={e => setBlacklisted(e.target.checked)} className="h-4 w-4 accent-sky-600 dark:accent-sky-400" />
+          <span className="text-sm text-gray-900 dark:text-gray-100">Blacklisted</span>
         </label>
 
         <label className="flex items-center gap-2">
           <span className="text-sm">Region</span>
-          <select value={region} onChange={e => setRegion(e.target.value)} className="ml-2 p-1 border rounded">
+          <select value={region} onChange={e => setRegion(e.target.value)} className="ml-2 p-1 border border-gray-300 rounded bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600">
             <option>RegionA</option>
             <option>RegionB</option>
             <option>RegionX</option>

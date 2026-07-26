@@ -9,7 +9,7 @@ function JsonModal({ payload, onClose }) {
           <div className="font-medium">Audit JSON</div>
           <button onClick={onClose} className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-100 rounded">Close</button>
         </div>
-        <pre className="text-xs max-h-96 overflow-auto">{JSON.stringify(payload, null, 2)}</pre>
+        <pre className="text-xs max-h-96 overflow-auto text-gray-800 dark:text-gray-200">{JSON.stringify(payload, null, 2)}</pre>
       </div>
     </div>
   );
@@ -68,8 +68,8 @@ export default function Reviewer() {
   return (
     <div className="bg-white dark:bg-gray-900 p-5 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-700 space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input placeholder="Search logs" value={filter} onChange={e => setFilter(e.target.value)} className="p-3 border rounded flex-1" />
-        <select value={decisionFilter} onChange={e => setDecisionFilter(e.target.value)} className="p-3 border rounded w-full sm:w-auto">
+        <input placeholder="Search logs" value={filter} onChange={e => setFilter(e.target.value)} className="p-3 border border-gray-300 rounded flex-1 bg-white text-gray-900 placeholder-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:border-gray-600" />
+        <select value={decisionFilter} onChange={e => setDecisionFilter(e.target.value)} className="p-3 border border-gray-300 rounded w-full sm:w-auto bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600">
           <option value="">All</option>
           <option value="approve">Approve</option>
           <option value="manual_review">Manual Review</option>
