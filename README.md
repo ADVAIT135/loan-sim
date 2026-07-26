@@ -1,5 +1,7 @@
 # Loan Decision Simulator
 
+![Loan Decision Simulator](assets/og-image.png)
+
 Live site: [Loan Decision Simulator](https://regulatorloansimulator.netlify.app/)
 
 A small single-page app that demonstrates a hybrid rules + explainable ML loan decision pipeline. It includes a client UI (Vite + React + Tailwind), serverless Netlify functions for decisions and audit logging, and a lightweight explainable scoring model.
